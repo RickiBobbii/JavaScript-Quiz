@@ -121,6 +121,26 @@ function displayQuestion(){
                                 localStorage.setItem("name", name);
                                 localStorage.setItem("score", score);
                                 displayScore();
+                                //display scores
+                                var names = [];
+                                //trying to add names to list
+                                if (localStorage.getItem('names')){
+                                    names = JSON.parse(localStorage.getItem('names'));
+                                }
+                                names.push(name + " = " + score + " points");
+                                //
+                                localStorage.setItem('names', JSON.stringify(names));
+                                var namesList = document.createElement("ul");
+                                namesList.innerHTML = '<h3>Score Board</h3>';
+                                for (i= 0; i < names.length; i++) {
+                                    var nameLength = document.createElement("li");
+                                    var nameText = document.createTextNode(names[i]);
+                                    nameLength.appendChild(nameText);
+                                    namesList.appendChild(nameLength);   
+                                }
+                                document.body.appendChild(namesList);
+                                //style score board
+                                namesList.setAttribute('style', 'color:white;text-shadow: 0 0 10px;' )
                                 //retry button test
                                 var retryBtn = document.createElement('button');
                                 retryBtn.setAttribute('type', 'submit');
