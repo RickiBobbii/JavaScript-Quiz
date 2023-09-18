@@ -1,4 +1,4 @@
-# m4-challenge
+# m4-challenge : Below user story and Criteria are from edX module 4.
 
 This Challenge invites you to build a timed coding quiz with multiple-choice questions. This app will run in the browser and will feature dynamically updated HTML and CSS powered by JavaScript code that you write. It will have a clean, polished, and responsive user interface. 
 
@@ -25,3 +25,25 @@ THEN the game is over
 WHEN the game is over
 THEN I can save my initials and my score
 ```
+## Functionality
+
+The quiz score is based of the amount of time user has left when finished.  The faster user finishes, the higher the score.
+
+## In Progress
+
+Score Board was still being worked on.  
+
+## Visuals
+
+![Screenshoot of webpage][def]
+
+## Github Link
+
+[Module-Four Challenge Link](https://rickibobbii.github.io/m4-challenge/)
+
+
+## License
+
+MIT License
+
+[def]: ./assets/images/module4screenshot.png
