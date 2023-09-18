@@ -4,6 +4,7 @@ var currentQuestion = 0;
 var timerCount = 30;
 var timerEl = document.querySelector("#timer-count");
 var startButton = document.querySelector("#start-button");
+var startScreen = document.querySelector("#start-screen");
 var questionText = document.querySelector("#question-text");
 var userOptions = document.querySelector("#options");
 var userScore = document.querySelector("#user-score");
@@ -54,6 +55,7 @@ function startTimer() {
         timerEl.textContent = timerCount;
         if (timerCount <= 0) {
             clearInterval(timer);
+            alert("Time is up!");
         }
     }, 1000);
 
@@ -63,7 +65,8 @@ function startTimer() {
 let currentChoice = [];
 
 function displayQuestion(){
-    startButton.style.visibility = 'hidden';
+    //startButton.style.visibility = 'hidden';
+    startScreen.style.display = 'none';
     questionText.innerHTML = questions[currentQuestion].question;
     currentChoice = questions[currentQuestion].choices;
     let choiceList = "";
