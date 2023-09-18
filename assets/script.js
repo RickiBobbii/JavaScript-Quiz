@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded',function() {
 
 var currentQuestion = 0;
+var timer;
 var timerCount = 30;
 var timerEl = document.querySelector("#timer-count");
 var startButton = document.querySelector("#start-button");
@@ -41,16 +42,12 @@ var questions = [
 
 //Start page and start button
 function startQuiz() {
-
     startTimer();
     displayQuestion();
 };
-//submit event listener to check startQuiz
-//document.getElementById('#quiz-form').addEventListener('click', startQuiz);
-
 //function for Timer
 function startTimer() {
-   var timer = setInterval(function(){
+    timer = setInterval(function(){
         timerCount--;
         timerEl.textContent = timerCount;
         if (timerCount <= 0) {
@@ -58,9 +55,14 @@ function startTimer() {
             alert("Time is up!");
         }
     }, 1000);
-
 };
-
+//Score screen and submit box for initials
+function displayScore () {
+    var playerName = localStorage.getItem("name");
+    var playerScore = localStorage.getItem("score");
+    userScore.textContent = playerName + " = " + playerScore + " points      ";
+    userScore.classList.add('userScore');
+}
 //function to display question
 let currentChoice = [];
 
@@ -74,7 +76,7 @@ function displayQuestion(){
         choiceList += "<button type='button' id='btn'>" + currentChoice[i] + "</button>";   
     }
     userOptions.innerHTML = choiceList;
-    console.log(choiceList);
+    console.log(currentChoice);
     
     //function and Event listener to check Answer
     document.querySelectorAll("#btn").forEach(function(button) {button.addEventListener("click", function(event){
@@ -87,8 +89,51 @@ function displayQuestion(){
                         currentQuestion++;
                         console.log("Answer is correct: ", selectedAnswer);
                         if (currentQuestion === questions.length) {
-                            return alert("Quiz complete, last answer was " + selectedAnswer);
-                            
+                            //Display score
+                            questionText.style.display = 'none';
+                            userOptions.style.display = 'none';
+                            document.querySelector("#timer").style.display = 'none';
+                            console.log(timerCount);
+                            userScore.textContent = "You finished with a Time and Score of " + timerCount + "!";
+                            console.log(timerCount);
+                            clearInterval(timer);
+                            // Submit button test
+                            var form = document.createElement('form');
+                            userScore.appendChild(form);
+                            var nameInput = document.createElement('input');
+                            nameInput.setAttribute('type', 'text');
+                            nameInput.id = 'name';
+                            form.appendChild(nameInput);
+                            var submitBtn = document.createElement('button');
+                            submitBtn.setAttribute('type', 'submit');
+                            submitBtn.id = 'submit-name';
+                            submitBtn.innerHTML = 'Submit Initials';
+                            form.appendChild(submitBtn);
+                            //add Event listener for Initials submit 
+                            submitBtn.addEventListener("click", function(event) {
+                                event.preventDefault();
+                                var name = nameInput.value;
+                                var score = timerCount.valueOf();
+                                //add if no input
+                                if(name === "") {
+                                    alert("Error, no input typed in");   
+                                }
+                                localStorage.setItem("name", name);
+                                localStorage.setItem("score", score);
+                                displayScore();
+                                //retry button test
+                                var retryBtn = document.createElement('button');
+                                retryBtn.setAttribute('type', 'submit');
+                                retryBtn.id = 'submit-name';
+                                //add style to retryBtn
+                                retryBtn.classList.add('retryBtn');
+                                retryBtn.innerHTML = 'Retry?';
+                                userScore.appendChild(retryBtn);
+                                //link to begining page
+                                retryBtn.addEventListener("click", function() {
+                                    window.location.reload();
+                                });
+                            }) 
                         }else{ 
                             displayQuestion();
                         }  
@@ -103,7 +148,7 @@ function displayQuestion(){
     
 };
 
-//Score screen and submit box for initials
+
 
 startButton.addEventListener("click", startQuiz);
 
